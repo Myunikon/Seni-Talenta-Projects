@@ -1,0 +1,326 @@
+/* --- LUXURY DARK THEME VARIABLES --- */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
+
+:root {
+    --bg-dark: #050505;
+    --bg-section: #0a0a0a;
+    --card-glass: rgba(255, 255, 255, 0.05);
+    --gold-primary: linear-gradient(135deg, #FFD700 0%, #FDB931 100%);
+    --gold-solid: #FFD700;
+    --text-white: #ffffff;
+    --text-muted: #a0a0a0;
+    --border-glass: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+ul { list-style: none; }
+
+/* --- 1. NAVBAR (Style Login/Register) --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    position: fixed; /* Fixed agar sticky saat scroll */
+    top: 0; width: 100%;
+    z-index: 1000;
+    background: rgba(5, 5, 5, 0.8); /* Gelap transparan */
+    backdrop-filter: blur(10px);
+    border-bottom: var(--border-glass);
+}
+
+.logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; display: flex; align-items: center; gap: 10px; }
+.logo img { height: 40px; }
+
+/* Menu Tengah (Floating Pill) */
+nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 30px;
+    border-radius: 50px;
+    border: var(--border-glass);
+}
+
+nav ul { display: flex; gap: 30px; }
+nav a { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); position: relative; }
+nav a:hover, nav a.active { color: var(--text-white); }
+nav a::after {
+    content: ''; position: absolute; width: 0; height: 2px;
+    bottom: -4px; left: 0; background: var(--gold-solid); transition: width 0.3s;
+}
+nav a:hover::after { width: 100%; }
+
+/* Tombol Kanan */
+.btn-auth {
+    padding: 10px 25px;
+    background: var(--gold-primary);
+    color: #000;
+    border-radius: 30px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+}
+.btn-auth:hover { transform: scale(1.05); }
+
+/* --- 2. HERO SECTION (Layout Kiri-Kanan) --- */
+.hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    padding: 100px 5% 50px; /* Padding top besar utk navbar */
+    position: relative;
+    background: radial-gradient(circle at top right, #1a1500, transparent 40%);
+}
+
+.hero-text { flex: 1; max-width: 600px; z-index: 2; }
+.hero-title {
+    font-size: 3.5rem; line-height: 1.1; font-weight: 800; margin-bottom: 20px;
+}
+.hero-title span {
+    background: var(--gold-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.hero-desc { color: var(--text-muted); margin-bottom: 30px; font-size: 1rem; line-height: 1.6; }
+
+.hero-actions { display: flex; gap: 15px; margin-bottom: 40px; }
+.btn-primary {
+    background: var(--gold-primary); color: #000; padding: 12px 30px; border-radius: 8px; font-weight: 700; border: none; cursor: pointer;
+}
+.btn-outline {
+    background: transparent; color: var(--text-white); padding: 12px 30px; border-radius: 8px; font-weight: 600; border: 1px solid #333; display: flex; align-items: center; gap: 8px;
+}
+.btn-outline:hover { border-color: var(--gold-solid); color: var(--gold-solid); }
+
+.hero-stats { display: flex; gap: 40px; border-top: 1px solid #222; padding-top: 20px; }
+.stat-item h3 { font-size: 1.8rem; color: var(--gold-solid); font-weight: 700; }
+.stat-item p { font-size: 0.8rem; color: #666; }
+
+/* Hero Image Card (Kanan) */
+.hero-img-box {
+    position: relative;
+    width: 450px; height: 550px;
+    border-radius: 20px;
+    overflow: hidden;
+    border: var(--border-glass);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+.hero-img { width: 100%; height: 100%; object-fit: cover; }
+
+.badge-float {
+    position: absolute; top: 20px; right: 20px;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+    padding: 5px 15px; border-radius: 20px; font-size: 0.8rem;
+    display: flex; align-items: center; gap: 5px; border: 1px solid #333;
+}
+.price-tag {
+    position: absolute; bottom: 30px; left: -20px;
+    background: var(--gold-primary); color: #000;
+    padding: 15px 30px; font-weight: 700; border-radius: 8px;
+    box-shadow: 5px 10px 20px rgba(0,0,0,0.3);
+}
+
+/* --- 3. SECTIONS UMUM --- */
+.section-pad { padding: 80px 5%; }
+.section-header { text-align: center; margin-bottom: 50px; }
+.section-title { font-size: 2.2rem; font-weight: 700; margin-bottom: 10px; }
+.section-title span { color: var(--gold-solid); }
+.section-sub { color: var(--text-muted); font-size: 0.9rem; }
+
+/* --- 4. KOLEKSI GRID (4 Kolom) --- */
+.collection-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 Kartu Sejajar */
+    gap: 20px;
+}
+
+.card-item {
+    background: var(--card-glass);
+    border-radius: 12px;
+    overflow: hidden;
+    border: var(--border-glass);
+    transition: 0.3s;
+    position: relative;
+}
+.card-item:hover { transform: translateY(-10px); border-color: var(--gold-solid); }
+
+.card-img { width: 100%; height: 350px; object-fit: cover; }
+.card-overlay {
+    position: absolute; bottom: 0; left: 0; width: 100%;
+    background: linear-gradient(to top, #000, transparent);
+    padding: 20px;
+}
+.card-title { font-size: 1rem; font-weight: 700; margin-bottom: 5px; }
+.card-footer { display: flex; justify-content: space-between; align-items: center; }
+.card-price { color: var(--gold-solid); font-weight: 600; font-size: 0.9rem; }
+
+/* --- 5. TESTIMONIALS (2 Kolom Besar) --- */
+.testi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+.testi-card {
+    background: #111; padding: 30px; border-radius: 12px;
+    border: var(--border-glass); display: flex; flex-direction: column; gap: 15px;
+}
+.user-profile { display: flex; gap: 15px; align-items: center; }
+.user-avatar { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--gold-solid); }
+.quote { font-style: italic; color: #ccc; font-size: 0.9rem; line-height: 1.6; }
+.stars { color: var(--gold-solid); font-size: 0.8rem; }
+
+/* --- 6. CTA BANNER --- */
+.cta-banner {
+    background: linear-gradient(to right, #2c2000, #1a1500);
+    padding: 60px;
+    border-radius: 20px;
+    text-align: center;
+    border: 1px solid #333;
+    margin: 0 5% 80px;
+}
+.cta-form {
+    margin-top: 30px; display: flex; justify-content: center; gap: 10px;
+}
+.cta-input {
+    background: #000; border: 1px solid #333; padding: 12px 20px;
+    border-radius: 8px; color: #fff; width: 300px; outline: none;
+}
+
+/* --- MEGA FOOTER LUXURY --- */
+footer {
+    background-color: #080808;
+    border-top: 1px solid #222;
+    color: #fff;
+    padding-top: 80px;
+    font-size: 0.9rem;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 5%;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1.2fr 1.5fr; /* Kolom Brand lebih lebar */
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.footer-col h4 {
+    color: #FFD700;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* 1. Brand & Deskripsi */
+.footer-brand .logo {
+    font-size: 1.5rem; font-weight: 800; color: #fff; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;
+}
+.footer-desc { color: #888; line-height: 1.8; margin-bottom: 25px; max-width: 300px; }
+
+/* 4. Social Media */
+.social-links { display: flex; gap: 15px; }
+.social-btn {
+    width: 40px; height: 40px; border-radius: 50%; border: 1px solid #333;
+    background: #111; color: #fff; display: flex; align-items: center; justify-content: center;
+    transition: 0.3s; text-decoration: none;
+}
+.social-btn:hover { border-color: #FFD700; color: #FFD700; transform: translateY(-3px); }
+
+/* 2 & 3. Navigasi & Kontak */
+.footer-links { list-style: none; padding: 0; }
+.footer-links li { margin-bottom: 15px; }
+.footer-links a { color: #aaa; transition: 0.3s; display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+.footer-links a:hover { color: #FFD700; padding-left: 5px; }
+.contact-item { display: flex; align-items: start; gap: 12px; color: #aaa; margin-bottom: 15px; line-height: 1.6; }
+.contact-item i { color: #FFD700; margin-top: 4px; }
+
+/* 5. Newsletter */
+.newsletter-form { display: flex; gap: 10px; margin-bottom: 20px; }
+.news-input {
+    width: 100%; padding: 12px; background: #111; border: 1px solid #333;
+    border-radius: 6px; color: #fff; outline: none;
+}
+.news-input:focus { border-color: #FFD700; }
+.news-btn {
+    background: #FFD700; color: #000; border: none; padding: 0 20px;
+    border-radius: 6px; font-weight: 700; cursor: pointer; transition: 0.3s;
+}
+.news-btn:hover { background: #e6c200; }
+
+/* 8. Payment Icons */
+.payment-row { display: flex; gap: 10px; font-size: 1.5rem; color: #666; margin-top: 15px; }
+
+/* 6 & 7. Bottom Bar (Copyright & Legal) */
+.footer-bottom {
+    border-top: 1px solid #222;
+    padding: 25px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #050505;
+    color: #666;
+    font-size: 0.85rem;
+}
+.legal-links { display: flex; gap: 20px; }
+.legal-links a { color: #666; text-decoration: none; transition: 0.3s; }
+.legal-links a:hover { color: #FFD700; }
+
+/* Responsive */
+@media (max-width: 1024px) { .footer-container { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) {
+    .footer-container { grid-template-columns: 1fr; text-align: center; }
+    .footer-desc { margin: 0 auto 20px; }
+    .social-links, .payment-row { justify-content: center; }
+    .footer-bottom { flex-direction: column; gap: 15px; text-align: center; }
+    .contact-item { justify-content: center; }
+}
+/* --- MODAL SETTINGS (CSS INLINE DI HTML, TAPI INI BACKUP) --- */
+.modal-hidden { display: none !important; }
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .collection-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero-section { flex-direction: column; text-align: center; padding-top: 120px; }
+    .hero-actions, .hero-stats { justify-content: center; }
+    .hero-img-box { width: 100%; height: 400px; margin-top: 40px; }
+    .testi-grid { grid-template-columns: 1fr; }
+    nav { bottom: 20px; top: auto; width: 90%; justify-content: center; background: #000; border: 1px solid #333; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* --- CUSTOM TOAST NOTIFICATION --- */
+#toast-box {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #111;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 3000;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    border: 1px solid #FFD700; /* List Emas */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.5s, bottom 0.5s;
+    display: flex; align-items: center; gap: 10px; justify-content: center;
+}
+
+#toast-box.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 50px; /* Efek naik sedikit */
+}

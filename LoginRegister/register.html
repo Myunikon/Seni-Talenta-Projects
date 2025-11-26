@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar - Talenta Arts</title>
+
+    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../Assets/css/responsive.css">
+
+    <style>
+        /* Aturan Desktop (Header Fix) */
+        @media (min-width: 769px) {
+            .mobile-toggle, .close-menu, #mobileOverlay { display: none !important; }
+
+            header {
+                display: flex; justify-content: space-between; align-items: center;
+                padding: 20px 5%; position: absolute; top: 0; width: 100%; z-index: 100;
+            }
+
+            header nav {
+                position: absolute; left: 50%; transform: translateX(-50%);
+                background: rgba(255, 255, 255, 0.05); padding: 10px 30px;
+                border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.1);
+                display: block !important; top: 20px;
+            }
+
+            header nav ul {
+                display: flex !important; gap: 30px; margin: 0; padding: 0;
+                list-style: none !important;
+            }
+
+            header nav ul li { list-style: none !important; }
+
+            header nav ul li a {
+                font-size: 0.9rem; color: #a0a0a0; text-decoration: none; position: relative; font-weight: 500;
+            }
+            header nav ul li a:hover { color: #fff; }
+            header nav ul li a::after {
+                content: ''; position: absolute; width: 0; height: 2px;
+                bottom: -4px; left: 0; background: #FFD700; transition: width 0.3s;
+            }
+            header nav ul li a:hover::after { width: 100%; }
+
+            #authStatic { display: flex; align-items: center; }
+
+            /* Tombol Masuk (Outline Style) */
+            .btn-auth-header {
+                background: transparent; color: #FFD700; border: 1px solid #FFD700;
+                padding: 10px 25px; border-radius: 30px; font-weight: 700;
+                font-size: 0.9rem; text-decoration: none; transition: 0.3s;
+                display: inline-block;
+            }
+            .btn-auth-header:hover {
+                background: rgba(255, 215, 0, 0.1); transform: translateY(-2px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header id="app-header"></header>
+
+    <div class="main-container">
+        <div class="left-panel">
+            <div class="hero-content" style="text-align: center; align-items: center; display: flex; flex-direction: column;">
+                <h1>GABUNG<br>SEKARANG.</h1>
+                <p>Jadilah bagian dari komunitas seni terbesar.</p>
+                <img src="../Assets/PenariCilik.png" alt="Penari Tradisional" class="register-hero-img">
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="form-wrapper">
+                <div class="form-tabs">
+                    <a href="login.html" class="tab-link">Masuk</a>
+                    <a href="register.html" class="tab-link active">Daftar Baru</a>
+                </div>
+
+                <div class="register-scroll-container">
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <div class="input-wrapper">
+                                <input type="text" id="regName" placeholder="Nama Lengkap Anda" required>
+                                <i class="fa-regular fa-user input-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <div class="input-wrapper">
+                                <input type="email" id="regEmail" placeholder="nama@email.com" required>
+                                <i class="fa-regular fa-envelope input-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Nomor Telepon (WhatsApp)</label>
+                            <div class="input-wrapper">
+                                <input type="tel" id="regPhone" placeholder="08xx-xxxx-xxxx" required>
+                                <i class="fa-brands fa-whatsapp input-icon"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Buat Password</label>
+                            <div class="input-wrapper">
+                                <input type="password" id="regPass" placeholder="Minimal 8 karakter" required>
+                                <i class="fa-solid fa-lock input-icon"></i>
+                            </div>
+                            <small id="lengthError" style="color: #ff4444; font-size: 0.75rem; display: none; margin-top: 5px;">
+                            * Password terlalu pendek (min. 8 karakter)!
+                            </small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Konfirmasi Password</label>
+                            <div class="input-wrapper">
+                                <input type="password" id="regConfirmPass" placeholder="Ulangi Password" required>
+                                <i class="fa-solid fa-shield-halved input-icon"></i>
+                            </div>
+                            <small id="passError" style="color: #ff4444; font-size: 0.75rem; display: none; margin-top: 5px;">
+                                * Password tidak cocok!
+                            </small>
+                        </div>
+
+                        <button type="submit" class="btn-submit">DAFTAR & MASUK</button>
+
+                        <div class="social-login">
+                            <button type="button" class="btn-social" onclick="socialLogin('Google')"><i class="fa-brands fa-google"></i> Google</button>
+                            <button type="button" class="btn-social" onclick="socialLogin('Facebook')"><i class="fa-brands fa-facebook"></i> Facebook</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div style="text-align:center; color:#666; font-size:0.8rem; padding:20px; position:absolute; bottom:0; width:100%;">
+    &copy; 2025 Talenta Arts Project. All rights reserved.
+    </div>
+
+    <script>
+        function socialLogin(provider) {
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userName', 'User ' + provider);
+            localStorage.setItem('role', 'user');
+            window.location.href = '../Dashboard/landingpage.html';
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Ambil element dan value
+            const passInput = document.getElementById('regPass');
+            const confirmInput = document.getElementById('regConfirmPass');
+            const pass = passInput.value;
+            const confirmPass = confirmInput.value;
+
+            // Element Error Message
+            const lengthError = document.getElementById('lengthError');
+            const matchError = document.getElementById('passError');
+
+            // Reset State (Sembunyikan error dulu)
+            lengthError.style.display = 'none';
+            matchError.style.display = 'none';
+            passInput.style.borderColor = '#333';
+            confirmInput.style.borderColor = '#333';
+
+            if (pass.length < 8) {
+                lengthError.style.display = 'block';
+                passInput.style.borderColor = '#ff4444';
+
+                // Goyangkan form atau fokuskan input
+                passInput.focus();
+
+                if(typeof showToast === 'function') showToast("Password harus minimal 8 karakter!", "error");
+                return; // Hentikan proses
+            }
+
+            // 2. CEK KECOCOKAN PASSWORD (LOGIKA LAMA)
+            if (pass !== confirmPass) {
+                matchError.style.display = 'block';
+                confirmInput.style.borderColor = '#ff4444';
+
+                if(typeof showToast === 'function') showToast("Konfirmasi password tidak cocok!", "error");
+                return; // Hentikan proses
+            }
+
+            // --- JIKA LOLOS SEMUA VALIDASI ---
+            const name = document.getElementById('regName').value;
+            const phone = document.getElementById('regPhone').value;
+
+            // Simpan Data
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userName', name);
+            localStorage.setItem('userPhone', phone);
+            localStorage.setItem('role', 'user');
+
+            // Efek Loading
+            const btn = document.querySelector('.btn-submit');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Memproses...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                if(typeof showToast === 'function') showToast("Pendaftaran Berhasil! Selamat datang, " + name);
+                setTimeout(() => { window.location.href = '../Dashboard/landingpage.html'; }, 1500);
+            }, 1000);
+        });
+    </script>
+
+    <script src="../Assets/js/components.js"></script>
+    <script src="../Assets/js/main.js"></script>
+</body>
+</html>

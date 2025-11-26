@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Talenta Arts</title>
+
+    <link rel="stylesheet" href="landing.css">
+    <link rel="stylesheet" href="checkout.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/dark.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Assets/css/responsive.css">
+</head>
+<body>
+
+    <header id="app-header"></header>
+
+    <section class="checkout-banner">
+        <div class="page-title">
+            <h1>CHECKOUT <span>ORDER</span></h1>
+            <a href="../Katalog/katalog.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Kembali ke Katalog</a>
+        </div>
+        <div class="stepper">
+            <div class="step-item active" id="st-1"><div class="step-circle">1</div><span class="step-label">Info Penyewa</span></div>
+            <div class="step-line" id="line-1"></div>
+            <div class="step-item" id="st-2"><div class="step-circle">2</div><span class="step-label">Pengiriman</span></div>
+            <div class="step-line" id="line-2"></div>
+            <div class="step-item" id="st-3"><div class="step-circle">3</div><span class="step-label">Pembayaran</span></div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="grid-layout">
+            <div class="left-column">
+
+                <div id="step-1" class="form-card">
+                    <h3 class="section-title"><i class="fa-regular fa-id-card"></i> Informasi Penyewa</h3>
+                    <div class="form-row">
+                        <div class="form-group"><label>Nama Lengkap</label><input type="text" id="inputNama" class="input-dark" placeholder="Nama sesuai KTP"></div>
+                        <div class="form-group"><label>Email</label><input type="email" id="inputEmail" class="input-dark" placeholder="email@anda.com"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Nomor Telepon</label><input type="text" id="inputHp" class="input-dark" placeholder="08xx-xxxx-xxxx"></div>
+                        <div class="form-group"><label>Jenis Acara</label><select class="input-dark" style="appearance:none; color:#fff;"><option value="" disabled selected>Pilih Acara</option><option>Pernikahan</option><option>Pentas Seni</option><option>Festival Budaya</option></select></div>
+                    </div>
+                    <div class="form-group">
+                        <label>Alamat Lengkap</label>
+                        <input type="text" id="inputAlamat" class="input-dark" placeholder="Nama Jalan, Nomor Rumah, Kecamatan...">
+                        <div class="location-group"><button type="button" class="btn-location" onclick="getLocation()"><i class="fa-solid fa-location-crosshairs"></i> Ambil Lokasi Saya</button></div>
+                        <div id="coord-text" class="coord-display"></div>
+                    </div>
+                    <div class="form-group"><label>Catatan Tambahan</label><textarea class="input-dark" rows="3"></textarea></div>
+                    <div class="btn-container right"><button class="btn-next" onclick="nextStep(2)">Lanjut Pengiriman <i class="fa-solid fa-arrow-right"></i></button></div>
+                </div>
+
+                <div id="step-2" class="form-card hidden">
+                    <h3 class="section-title"><i class="fa-solid fa-truck-fast"></i> Pengiriman & Jadwal</h3>
+                    <div class="form-group">
+                        <label>Metode Pengambilan</label>
+                        <div class="radio-grid">
+                            <label class="radio-label"><input type="radio" name="pickup" value="ambil"><div class="radio-box"><div class="radio-dot"></div><div><div style="font-weight:700; color:#fff">Ambil di Studio</div><div style="font-size:0.8rem; color:#888">Gratis</div></div></div></label>
+                            <label class="radio-label"><input type="radio" name="pickup" value="antar" checked><div class="radio-box"><div class="radio-dot"></div><div><div style="font-weight:700; color:#fff">Antar ke Alamat</div><div style="font-size:0.8rem; color:#888">+ Rp 25.000</div></div></div></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Tanggal Sewa</label>
+                        <div class="form-row">
+                            <div><label>Mulai</label><input type="text" id="tglMulai" class="input-dark"></div>
+                            <div><label>Selesai</label><input type="text" id="tglSelesai" class="input-dark"></div>
+                        </div>
+                    </div>
+                    <div class="duration-bar"><span><i class="fa-regular fa-clock"></i> Durasi Sewa</span><span id="durasiTeks">- Hari</span></div>
+                    <div class="btn-container">
+                        <button class="btn-back" onclick="nextStep(1)"><i class="fa-solid fa-arrow-left"></i> Kembali</button>
+                        <button class="btn-next" onclick="nextStep(3)">Lanjut Bayar <i class="fa-solid fa-arrow-right"></i></button>
+                    </div>
+                </div>
+
+                <div id="step-3" class="form-card hidden">
+                    <h3 class="section-title"><i class="fa-regular fa-credit-card"></i> Metode Pembayaran</h3>
+                    <div class="form-group">
+                        <label>Kode Promo</label>
+                        <div style="display:flex; gap:10px;"><input type="text" id="inputPromo" class="input-dark" placeholder="Punya kode promo?"><button class="btn-apply" onclick="cekPromo()">Pakai</button></div>
+                    </div>
+                    <label style="color:#FFD700; margin:20px 0 10px; display:block; font-weight:bold;">Tunai</label>
+                    <label class="payment-label"><input type="radio" name="pay" value="cod" class="pay-radio"><div class="payment-card" style="border-color: #4CAF50;"><i class="fa-solid fa-money-bill-1-wave" style="color:#4CAF50"></i> <span>Bayar di Tempat (COD)</span></div></label>
+
+                    <label style="color:#888; margin:20px 0 10px; display:block;">Transfer & E-Wallet</label>
+                    <div class="payment-option-grid">
+                        <label class="payment-label"><input type="radio" name="pay" value="gopay" class="pay-radio"><div class="payment-card"><i class="fa-solid fa-wallet"></i> <span>GoPay</span></div></label>
+                        <label class="payment-label"><input type="radio" name="pay" value="dana" class="pay-radio"><div class="payment-card"><i class="fa-solid fa-money-bill-wave"></i> <span>DANA</span></div></label>
+                        <label class="payment-label"><input type="radio" name="pay" value="bni" class="pay-radio"><div class="payment-card"><i class="fa-solid fa-building-columns"></i> <span>BNI</span></div></label>
+                        <label class="payment-label"><input type="radio" name="pay" value="mandiri" class="pay-radio"><div class="payment-card"><i class="fa-solid fa-building-columns"></i> <span>Mandiri</span></div></label>
+                    </div>
+
+                    <label class="payment-label" style="margin-top:15px; display:block;"><input type="radio" name="pay" id="cc-radio" value="cc" class="pay-radio"><div class="payment-card"><i class="fa-regular fa-credit-card"></i> <span>Kartu Kredit / Debit</span></div></label>
+                    <div id="cc-details" class="cc-details-container hidden">
+                        <div class="form-group"><label>Nomor Kartu</label><input type="text" class="input-dark" placeholder="0000 0000 0000 0000"></div>
+                        <div class="form-row"><div class="form-group"><label>Exp Date</label><input type="text" class="input-dark" placeholder="MM/YY"></div><div class="form-group"><label>CVV</label><input type="text" class="input-dark" placeholder="123"></div></div>
+                    </div>
+
+                    <div class="btn-container">
+                        <button class="btn-back" onclick="nextStep(2)"><i class="fa-solid fa-arrow-left"></i> Kembali</button>
+                        <button class="btn-next" id="btnBayar" onclick="prosesPembayaran()">Bayar Sekarang <i class="fa-solid fa-check"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="summary-card">
+                    <h3 class="summary-title">Ringkasan Pesanan</h3>
+
+                    <div id="cartItemsContainer"></div>
+
+                    <div class="cost-summary">
+                        <div class="cost-row"><span>Subtotal</span><span id="summarySubtotal">Rp 0</span></div>
+                        <div class="cost-row"><span>Biaya Pengiriman</span><span id="summaryOngkir">Rp 25.000</span></div>
+                        <div class="cost-row promo hidden" id="rowDiskon"><span>Promo Kode</span><span id="summaryDiskon">-Rp 0</span></div>
+                    </div>
+
+                    <div class="total-final"><span>Total</span><span id="summaryTotal">Rp 0</span></div>
+
+                    <div class="rental-info-box">
+                        <div class="rental-head">Periode Sewa</div>
+                        <div class="rental-row"><span>Mulai:</span><span id="infoMulai">-</span></div>
+                        <div class="rental-row"><span>Selesai:</span><span id="infoSelesai">-</span></div>
+                        <div class="rental-row"><span>Durasi:</span><span id="infoDurasi" style="color:#FFD700">1 Hari</span></div>
+                    </div>
+
+                    <div class="cs-link">Butuh bantuan? <a href="#">Hubungi Customer Service</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading-modal" class="modal-overlay">
+        <div class="modal-box" style="width:300px; padding:30px;">
+            <div class="spinner"></div>
+            <h3 style="margin-top:20px; color:#fff;">Memproses...</h3>
+            <p style="color:#888; font-size:0.8rem">Jangan tutup halaman ini</p>
+        </div>
+    </div>
+
+    <div id="success-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="success-icon" id="modal-icon"><i class="fa-solid fa-check"></i></div>
+            <h2 style="color:#FFD700; margin-bottom:10px;" id="modal-title">Pembayaran Berhasil</h2>
+            <p style="color:#aaa; margin-bottom:20px;">Kode Pesanan: <span id="order-id" style="color:#fff; font-weight:bold;">#TAS-000</span></p>
+            <div id="payment-content"></div>
+            <div style="display:flex; gap:10px; flex-direction:column; margin-top:20px;">
+                <button onclick="window.location.href='../Dashboard/settings.html'" class="btn-next" style="width:100%; justify-content:center;">Cek Status di Profil</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="../Assets/js/components.js"></script> <script src="../Assets/js/main.js"></script>       <script src="../Assets/js/checkout.js"></script>   </body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Katalog Kostum - Talenta Arts</title>
+
+    <link rel="stylesheet" href="katalog.css" />
+    <link rel="stylesheet" href="landing.css" /> <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="../Assets/css/responsive.css">
+</head>
+<body>
+
+    <header id="app-header"></header>
+
+    <section class="catalog-hero">
+        <h1 class="page-title">KATALOG <span>KOSTUM</span></h1>
+        <p class="page-desc">
+            Temukan kostum tradisional autentik dan modifikasi modern untuk momen spesial Anda.
+        </p>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" class="search-input" placeholder="Cari kostum berdasarkan daerah, tarian, atau acara..." />
+            <button class="search-btn"><i class="fa-solid fa-search"></i></button>
+        </div>
+
+        <div class="tags-row">
+            <span class="tag">Tari Paduppa</span>
+            <span class="tag">Kostum Bone</span>
+            <span class="tag">Acara Pernikahan</span>
+            <span class="tag">Festival Budaya</span>
+        </div>
+    </section>
+
+    <div class="main-layout">
+        <aside class="sidebar">
+            <div class="filter-header">
+                <span class="filter-title"><i class="fa-solid fa-filter"></i> Filter</span>
+                <span class="reset-btn">Reset Semua</span>
+            </div>
+
+            <div class="filter-group">
+                <div class="group-title">Daerah Asal <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="checkbox-list">
+                    <label class="checkbox-item"><input type="checkbox" /> Bone</label>
+                    <label class="checkbox-item"><input type="checkbox" /> Makassar</label>
+                    <label class="checkbox-item"><input type="checkbox" /> Sulawesi Selatan</label>
+                    <label class="checkbox-item"><input type="checkbox" /> Sumatera Utara</label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="group-title">Jenis Tarian <i class="fa-solid fa-chevron-down"></i></div>
+                <div class="checkbox-list">
+                    <label class="checkbox-item"><input type="checkbox" /> Tari Paduppa</label>
+                    <label class="checkbox-item"><input type="checkbox" /> Tari Pakarena</label>
+                    <label class="checkbox-item"><input type="checkbox" /> Tari Paraga</label>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="group-title">Rentang Harga <i class="fa-solid fa-chevron-down"></i></div>
+                <div style="display: flex; gap: 10px; margin-bottom: 10px">
+                    <input type="text" placeholder="Min" style="width: 50%; background: #111; border: 1px solid #333; color: #fff; padding: 5px; border-radius: 4px;" />
+                    <input type="text" placeholder="Maks" style="width: 50%; background: #111; border: 1px solid #333; color: #fff; padding: 5px; border-radius: 4px;" />
+                </div>
+            </div>
+        </aside>
+
+        <main class="content-area">
+            <div class="content-header">
+                <div class="result-count">
+                    Menampilkan <span>Loading...</span>
+                </div>
+                <div class="sort-box">
+                    <select>
+                        <option>Paling Populer</option>
+                        <option>Harga Terendah</option>
+                        <option>Harga Tertinggi</option>
+                        <option>Terbaru</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="product-grid" id="gridProduk"></div>
+
+            <div class="load-more-container">
+                <button class="btn-load">
+                    Muat Lebih Banyak <i class="fa-solid fa-chevron-down"></i>
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <footer id="app-footer"></footer>
+
+    <script src="../Assets/js/components.js"></script>
+    <script src="../Assets/js/data_produk.js"></script> <script src="../Assets/js/main.js"></script>
+
+    <script>
+        // --- 1. LOGIKA RENDER PRODUK DARI DATABASE ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.getElementById('gridProduk');
+            const countLabel = document.querySelector('.result-count');
+
+            // Pastikan MASTER_PRODUK ada (dari data_produk.js)
+            if (typeof MASTER_PRODUK === 'undefined') {
+                container.innerHTML = '<p style="color:red;">Gagal memuat data produk.</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+
+            MASTER_PRODUK.forEach(produk => {
+                let badgeClass = 'badge-available';
+                if(produk.status === 'Baru') badgeClass = 'badge-new';
+                if(produk.status === 'Terbatas') badgeClass = 'badge-limited';
+
+                const cardHTML = `
+                    <div class="product-card">
+                        <span class="badge ${badgeClass}">${produk.status}</span>
+
+                        <div class="img-container" style="cursor:pointer" onclick="bukaDetail(${produk.id})">
+                            <img src="${produk.gambar}" class="product-img" alt="${produk.nama}" loading="lazy" />
+                        </div>
+
+                        <div class="card-details">
+                            <h3 class="product-name" onclick="bukaDetail(${produk.id})">${produk.nama}</h3>
+
+                            <div class="product-rating">
+                                <i class="fa-solid fa-star"></i> ${produk.rating} (${produk.review} ulasan)
+                            </div>
+
+                            <div class="sizes">
+                                <span class="size-tag">S</span><span class="size-tag">M</span><span class="size-tag">L</span>
+                            </div>
+
+                            <p class="product-desc">${produk.desc}</p>
+
+                            <div class="price-row">
+                                <div class="price">${formatRupiah(produk.harga)} <span>/hari</span></div>
+                            </div>
+
+                            <button class="btn-rent" onclick="pilihKostumDariID(${produk.id})">Sewa Sekarang</button>
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', cardHTML);
+            });
+
+            countLabel.innerHTML = `Menampilkan <span>${MASTER_PRODUK.length}</span> kostum`;
+        });
+
+        // --- 2. FUNGSI HELPER ---
+
+        // Buka Detail Produk
+        function bukaDetail(id) {
+            const produk = MASTER_PRODUK.find(p => p.id === id);
+            if (produk) {
+                localStorage.setItem('viewProduct', JSON.stringify(produk));
+                window.location.href = 'detail.html';
+            }
+        }
+
+        // Perantara Tombol Sewa (Cari data by ID dulu)
+        function pilihKostumDariID(id) {
+            const produk = MASTER_PRODUK.find(p => p.id === id);
+            if(produk) {
+                pilihKostum(produk.nama, produk.harga, produk.gambar);
+            }
+        }
+
+        // --- 3. LOGIKA KERANJANG (DIPERBAIKI) ---
+        function pilihKostum(nama, harga, gambar) {
+
+            // A. CEK LOGIN DULU (GERBANG KEAMANAN)
+            if(localStorage.getItem('isLoggedIn') !== 'true') {
+                if(typeof showToast === 'function') showToast("Silakan Login dulu untuk menyewa", "error");
+                else alert("Silakan Login dulu untuk menyewa");
+
+                // Redirect ke Login
+                setTimeout(() => window.location.href = '../LoginRegister/login.html', 1000);
+                return; // BERHENTI DI SINI JIKA BELUM LOGIN
+            }
+
+            // B. JIKA SUDAH LOGIN, LANJUT PROSES
+            let keranjang = JSON.parse(localStorage.getItem('cartTalenta')) || [];
+            const indexAda = keranjang.findIndex(item => item.nama === nama);
+
+            if (indexAda !== -1) {
+                keranjang[indexAda].qty += 1;
+            } else {
+                keranjang.push({
+                    id: Date.now(),
+                    nama: nama,
+                    harga: harga,
+                    gambar: gambar,
+                    qty: 1,
+                    size: 'M' // Default size jika dari katalog
+                });
+            }
+
+            localStorage.setItem('cartTalenta', JSON.stringify(keranjang));
+
+            if(typeof showToast === 'function') showToast("Masuk Keranjang!");
+            setTimeout(() => window.location.href = '../Payment/checkout.html', 500);
+        }
+    </script>
+</body>
+</html>

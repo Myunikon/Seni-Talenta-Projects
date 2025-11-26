@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Produk - Talenta Arts</title>
+
+    <link rel="stylesheet" href="katalog.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../Assets/css/responsive.css">
+
+    <style>
+        /* CSS KHUSUS HALAMAN DETAIL */
+        .breadcrumb { padding: 100px 5% 20px; color: #888; font-size: 0.9rem; }
+        .breadcrumb span { color: #FFD700; }
+
+        .detail-container {
+            max-width: 1200px; margin: 0 auto; padding: 20px 5%;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 50px;
+            align-items: start; min-height: 80vh;
+        }
+
+        /* Kiri: Galeri */
+        .gallery-box { position: sticky; top: 100px; }
+        .main-img {
+            width: 100%; height: 500px; object-fit: cover;
+            border-radius: 15px; border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .thumb-grid { display: flex; gap: 10px; margin-top: 15px; }
+        .thumb-img {
+            width: 80px; height: 80px; object-fit: cover; border-radius: 8px;
+            border: 1px solid #333; cursor: pointer; opacity: 0.6; transition: 0.3s;
+        }
+        .thumb-img:hover, .thumb-img.active { opacity: 1; border-color: #FFD700; }
+
+        /* Kanan: Info */
+        .product-title { font-size: 2.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 10px; }
+        .product-price { font-size: 1.8rem; color: #FFD700; font-weight: 700; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 20px; }
+        .product-desc { color: #aaa; line-height: 1.8; margin-bottom: 30px; font-size: 0.95rem; }
+
+        .specs-box {
+            background: rgba(255,255,255,0.03); padding: 20px; border-radius: 10px;
+            border: 1px solid #222; margin-bottom: 30px;
+        }
+        .spec-row { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.9rem; }
+        .spec-label { color: #888; }
+        .spec-value { color: #fff; font-weight: 600; }
+
+        /* Actions */
+        .action-area { display: flex; gap: 15px; align-items: center; }
+        .btn-sewa {
+            flex: 1; background: linear-gradient(135deg, #FFD700 0%, #FDB931 100%);
+            color: #000; border: none; padding: 15px; border-radius: 30px;
+            font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.2);
+        }
+        .btn-sewa:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4); }
+
+        .btn-wishlist {
+            width: 50px; height: 50px; border-radius: 50%; border: 1px solid #333;
+            background: #111; color: #fff; cursor: pointer; display: flex;
+            align-items: center; justify-content: center; transition: 0.3s; font-size: 1.2rem;
+        }
+        .btn-wishlist:hover { border-color: #FF4444; color: #FF4444; }
+
+        /* Size Selector */
+        .size-selector { display: flex; gap: 10px; margin-bottom: 30px; }
+        .size-opt {
+            width: 40px; height: 40px; border: 1px solid #444; color: #888;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 8px; cursor: pointer; transition: 0.3s; font-weight: 600;
+        }
+        .size-opt:hover, .size-opt.active { border-color: #FFD700; color: #FFD700; background: rgba(255,215,0,0.05); }
+
+        @media(max-width: 900px) {
+            .detail-container { grid-template-columns: 1fr; }
+            .gallery-box { position: static; }
+            .main-img { height: 350px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="app-header"></header>
+
+    <div class="breadcrumb">
+        Koleksi / Kostum Adat / <span id="breadName">Loading...</span>
+    </div>
+
+    <div class="detail-container">
+
+        <div class="gallery-box">
+            <img id="mainImg" src="" class="main-img" alt="Detail Kostum">
+            <div class="thumb-grid">
+                <img src="" id="thumb1" class="thumb-img active" onclick="switchImage(this)">
+                <img src="../Assets/logo.png" class="thumb-img" onclick="switchImage(this)" style="padding:10px; background:#000;">
+                <img src="../Assets/PenariCilik.png" class="thumb-img" onclick="switchImage(this)">
+            </div>
+        </div>
+
+        <div class="info-box">
+            <h1 class="product-title" id="detailName">Memuat Produk...</h1>
+            <div style="margin-bottom: 15px; color: #FFD700;">
+                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                <span style="color:#666; font-size:0.8rem; margin-left:10px;">(150+ Review)</span>
+            </div>
+            <div class="product-price" id="detailPrice">Rp 0</div>
+
+            <div class="product-desc">
+                Rasakan kemewahan budaya dengan kostum autentik kualitas premium.
+                Dibuat dengan bahan pilihan yang nyaman dipakai berjam-jam, lengkap dengan aksesoris
+                detail yang memukau. Cocok untuk pernikahan, pre-wedding, atau pentas seni.
+            </div>
+
+            <div class="specs-box">
+                <div class="spec-row"><span class="spec-label">Bahan</span><span class="spec-value">Sutra Sengkang Asli</span></div>
+                <div class="spec-row"><span class="spec-label">Kelengkapan</span><span class="spec-value">Baju, Sarung, Aksesoris Kepala</span></div>
+                <div class="spec-row"><span class="spec-label">Kondisi</span><span class="spec-value" style="color:#4CAF50">Siap Pakai (Laundry)</span></div>
+            </div>
+
+            <div style="margin-bottom:10px; color:#888; font-size:0.9rem;">Pilih Ukuran:</div>
+            <div class="size-selector">
+                <div class="size-opt" onclick="selectSize(this)">S</div>
+                <div class="size-opt active" onclick="selectSize(this)">M</div>
+                <div class="size-opt" onclick="selectSize(this)">L</div>
+                <div class="size-opt" onclick="selectSize(this)">XL</div>
+            </div>
+
+            <div class="action-area">
+                <button class="btn-sewa" onclick="sewaSekarang()">
+                    Sewa Sekarang <i class="fa-solid fa-arrow-right"></i>
+                </button>
+                <button class="btn-wishlist" onclick="toggleWishlist(this)">
+                    <i class="fa-regular fa-heart"></i>
+                </button>
+            </div>
+
+            <div style="margin-top:20px; font-size:0.8rem; color:#666; display:flex; gap:20px;">
+                <span><i class="fa-solid fa-shield-halved"></i> Jaminan Bersih</span>
+                <span><i class="fa-solid fa-truck-fast"></i> Pengiriman Cepat</span>
+            </div>
+        </div>
+    </div>
+
+<footer id="app-footer"></footer>
+<script src="../Assets/js/components.js"></script>
+    <script src="../Assets/js/main.js"></script>
+
+    <script>
+        let productData = {};
+        let selectedSize = "M"; // Default size
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const storedData = localStorage.getItem('viewProduct');
+            if (storedData) {
+                productData = JSON.parse(storedData);
+                document.getElementById('detailName').innerText = productData.nama;
+                document.getElementById('breadName').innerText = productData.nama;
+                document.getElementById('detailPrice').innerText = formatRupiah(productData.harga);
+                document.getElementById('mainImg').src = productData.gambar;
+                document.getElementById('thumb1').src = productData.gambar;
+            } else {
+                window.location.href = 'katalog.html';
+            }
+        });
+
+        // Logika Pilih Ukuran
+        function selectSize(el) {
+            // Hapus aktif di semua
+            document.querySelectorAll('.size-opt').forEach(s => s.classList.remove('active'));
+            // Tambah aktif di yang dipilih
+            el.classList.add('active');
+            // Simpan text ukurannya (S, M, L, XL)
+            selectedSize = el.innerText;
+        }
+
+        function sewaSekarang() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn !== 'true') {
+                // Tampilkan Toast Error
+                if(typeof showToast === 'function') showToast("Silakan Login untuk menyewa!", "error");
+                else alert("Silakan Login untuk menyewa!");
+
+                // Redirect ke Login setelah 1 detik
+                setTimeout(() => {
+                    window.location.href = '../LoginRegister/login.html';
+                }, 1000);
+                return; // PENTING: Berhenti di sini, jangan lanjut ke keranjang
+            }
+
+            if (!productData || !productData.nama) return;
+
+            let keranjang = JSON.parse(localStorage.getItem('cartTalenta')) || [];
+
+            // Cek apakah barang dengan NAMA dan UKURAN yang sama sudah ada?
+            const indexAda = keranjang.findIndex(item => item.nama === productData.nama && item.size === selectedSize);
+
+            if (indexAda !== -1) {
+                keranjang[indexAda].qty += 1;
+            } else {
+                const itemBaru = {
+                    id: Date.now(),
+                    nama: productData.nama,
+                    harga: productData.harga,
+                    gambar: productData.gambar,
+                    size: selectedSize, // KITA SIMPAN UKURANNYA SEKARANG
+                    qty: 1
+                };
+                keranjang.push(itemBaru);
+            }
+
+            localStorage.setItem('cartTalenta', JSON.stringify(keranjang));
+            showToast("Produk masuk keranjang!");
+            setTimeout(() => window.location.href = '../Payment/checkout.html', 500);
+        }
+
+
+
+        // Logika Visual
+        function switchImage(el) {
+            document.getElementById('mainImg').src = el.src;
+            document.querySelectorAll('.thumb-img').forEach(img => img.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function selectSize(el) {
+            document.querySelectorAll('.size-opt').forEach(s => s.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function toggleWishlist(btn) {
+            const icon = btn.querySelector('i');
+            if (icon.classList.contains('fa-regular')) {
+                icon.classList.replace('fa-regular', 'fa-solid');
+                if(typeof showToast === 'function') showToast("Ditambahkan ke Wishlist!");
+            } else {
+                icon.classList.replace('fa-solid', 'fa-regular');
+            }
+        }
+    </script>
+</body>
+</html>

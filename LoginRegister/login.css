@@ -1,0 +1,291 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+:root {
+    --bg-dark: #050505;
+    --card-bg: rgba(30, 30, 30, 0.6); /* Transparan */
+    --gold-primary: linear-gradient(135deg, #FFD700 0%, #FDB931 100%);
+    --gold-text: #FFD700;
+    --text-white: #ffffff;
+    --text-muted: #a0a0a0;
+    --border-glass: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    min-height: 100vh;
+    overflow-x: hidden;
+    /* Tambahkan background image halus jika mau, tapi hitam pekat lebih elegan */
+    background: radial-gradient(circle at top right, #1a1500, #000000 40%);
+}
+
+a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+/* --- NAVBAR PREMIUM --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 5%;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+.logo img { height: 45px; }
+
+/* Menu Navigasi Tengah */
+nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.05);
+    padding: 10px 30px;
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    border: var(--border-glass);
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    position: relative;
+}
+
+nav a:hover, nav a.active {
+    color: var(--text-white);
+}
+
+/* Garis bawah animasi saat hover */
+nav a::after {
+    content: ''; position: absolute; width: 0; height: 2px;
+    bottom: -4px; left: 0; background: var(--gold-primary);
+    transition: width 0.3s;
+}
+nav a:hover::after { width: 100%; }
+
+/* Tombol Auth */
+.auth-buttons { display: flex; gap: 15px; align-items: center; }
+.btn-login { font-weight: 600; color: var(--text-white); }
+.btn-register {
+    background: var(--gold-primary);
+    color: #000;
+    padding: 10px 25px;
+    border-radius: 30px;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(253, 185, 49, 0.3);
+}
+.btn-register:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(253, 185, 49, 0.5); }
+
+/* --- MAIN LAYOUT --- */
+.main-container {
+    display: flex;
+    min-height: 100vh;
+    padding-top: 80px; /* Space for navbar */
+}
+
+/* Kolom Kiri (Hero Text) */
+.left-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 5%;
+}
+
+.hero-content h1 {
+    font-size: 4rem;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    background: var(--gold-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+
+.hero-content p { color: var(--text-muted); font-size: 1.1rem; max-width: 500px; margin-bottom: 40px; }
+
+.stats-row { display: flex; gap: 40px; }
+.stat-box i { font-size: 1.5rem; color: var(--gold-text); margin-bottom: 10px; }
+.stat-box strong { display: block; font-size: 1.1rem; }
+.stat-box span { font-size: 0.85rem; color: var(--text-muted); }
+
+/* Kolom Kanan (Form Card) */
+.right-panel {
+    flex: 0.8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Background Image Samar di kanan */
+.right-panel::before {
+    content: ''; position: absolute; top: 0; right: 0; width: 100%; height: 100%;
+    background: url('../Assets/Kuning\ Background.png') no-repeat center center/cover;
+    opacity: 0.2;
+    mask-image: linear-gradient(to right, transparent, black);
+    z-index: -1;
+}
+
+.form-wrapper {
+    width: 100%; max-width: 420px;
+    background: var(--card-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: var(--border-glass);
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+.form-tabs {
+    display: flex;
+    background: rgba(0,0,0,0.3);
+    padding: 5px;
+    border-radius: 12px;
+    margin-bottom: 30px;
+}
+.tab-link {
+    flex: 1; text-align: center; padding: 10px;
+    border-radius: 10px; font-size: 0.9rem; color: #888;
+    transition: 0.3s;
+}
+.tab-link.active { background: #333; color: #fff; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+/* Input Styles */
+.form-group { margin-bottom: 20px; position: relative; }
+.form-group label { display: block; font-size: 0.85rem; color: #aaa; margin-bottom: 8px; }
+.input-wrapper { position: relative; }
+
+.input-wrapper input {
+    width: 100%;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid #333;
+    padding: 15px 15px 15px 45px; /* Space for icon */
+    border-radius: 12px;
+    color: #fff;
+    font-size: 0.95rem;
+    transition: 0.3s;
+}
+.input-wrapper input:focus {
+    border-color: var(--gold-text);
+    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.1);
+    outline: none;
+}
+.input-icon {
+    position: absolute; left: 15px; top: 50%; transform: translateY(-50%);
+    color: #666; transition: 0.3s;
+}
+.input-wrapper input:focus + .input-icon { color: var(--gold-text); }
+
+.toggle-password {
+    position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
+    cursor: pointer; color: #666;
+}
+
+/* Buttons */
+.btn-submit {
+    width: 100%;
+    background: var(--gold-primary);
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #000;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+.btn-submit:hover { letter-spacing: 1px; }
+
+.social-login { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+.btn-social {
+    background: transparent; border: 1px solid #333;
+    color: #fff; padding: 12px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    cursor: pointer; transition: 0.3s;
+}
+.btn-social:hover { background: #111; border-color: #555; }
+
+/* Responsive HP */
+@media (max-width: 900px) {
+    .main-container { flex-direction: column; padding-top: 100px; }
+    .left-panel { text-align: center; padding-bottom: 40px; }
+    .hero-content h1 { font-size: 2.5rem; }
+    .stats-row { justify-content: center; }
+    .right-panel::before { display: none; }
+    nav { display: none; } /* Sembunyikan nav tengah di HP */
+    .form-wrapper { width: 90%; }
+}
+
+
+
+.register-hero-img {
+    width: 80%;
+    max-width: 400px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(253, 185, 49, 0.2);
+    margin-top: 30px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    transition: transform 0.5s ease;
+}
+
+.register-hero-img:hover {
+    transform: scale(1.02) rotate(1deg);
+    box-shadow: 0 0 50px rgba(253, 185, 49, 0.4);
+}
+
+.register-scroll-container {
+    max-height: 85vh; /* Batasi tinggi agar bisa discroll jika layar pendek */
+    overflow-y: auto;
+    padding-right: 5px; /* Ruang untuk scrollbar */
+}
+
+/* Kustomisasi Scrollbar halus */
+.register-scroll-container::-webkit-scrollbar { width: 4px; }
+.register-scroll-container::-webkit-scrollbar-track { background: transparent; }
+.register-scroll-container::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
+/* --- CUSTOM TOAST NOTIFICATION --- */
+#toast-box {
+    visibility: hidden;
+    min-width: 250px;
+    background-color: #111;
+    color: #fff;
+    text-align: center;
+    border-radius: 8px;
+    padding: 16px;
+    position: fixed;
+    z-index: 3000;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    border: 1px solid #FFD700; /* List Emas */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.5s, bottom 0.5s;
+    display: flex; align-items: center; gap: 10px; justify-content: center;
+}
+
+#toast-box.show {
+    visibility: visible;
+    opacity: 1;
+    bottom: 50px;
+}

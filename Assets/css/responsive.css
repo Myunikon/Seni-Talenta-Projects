@@ -1,0 +1,230 @@
+/* ==========================================================================
+   TALENTA ARTS - ULTIMATE RESPONSIVE SUITE (V.2.0)
+   Features: Safe-Area, Touch Targets, tiered Grid, Glassmorphism
+   ========================================================================== */
+
+/* --- 0. GLOBAL MOBILE VARIABLES & RESET --- */
+:root {
+    --nav-height: 65px;
+    --header-height: 70px;
+    --safe-bottom: env(safe-area-inset-bottom, 20px); /* Support iPhone Notch */
+}
+
+/* Sembunyikan elemen Desktop saat di mobile */
+@media (max-width: 900px) {
+    .bottom-nav { display: flex !important; } /* Paksa muncul bottom nav */
+    header nav, .mobile-toggle, .close-menu, #mobileOverlay { display: none !important; } /* Matikan nav lama */
+}
+
+/* Sembunyikan elemen Mobile saat di desktop */
+@media (min-width: 901px) {
+    .bottom-nav { display: none !important; }
+}
+
+/* ==========================================================================
+   1. TABLET & SMALL LAPTOP (Max: 1024px)
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .collection-grid, .product-grid, .masonry-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 20px;
+    }
+
+    .hero-text h1 { font-size: 2.5rem; }
+}
+
+/* ==========================================================================
+   2. MOBILE STANDARD (Max: 900px) - THE CORE LOGIC
+   ========================================================================== */
+@media (max-width: 900px) {
+
+    /* --- A. GLOBAL LAYOUT & SCROLLING --- */
+    body, html {
+        overflow-x: hidden;
+        width: 100%;
+        -webkit-tap-highlight-color: transparent; /* Hilangkan highlight biru saat tap */
+    }
+
+    body {
+        /* Padding bawah dinamis: Tinggi Nav + Safe Area + Buffer */
+        padding-bottom: calc(var(--nav-height) + var(--safe-bottom) + 40px) !important;
+    }
+
+    .container, .main-layout, .hero-section, .detail-container, .dashboard-container {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* --- B. HEADER (COMPACT MODE) --- */
+    header {
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 10px 20px !important;
+        background: rgba(5, 5, 5, 0.98) !important;
+        height: var(--header-height);
+        position: fixed; top: 0; left: 0; right: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        z-index: 1000;
+    }
+
+    .logo {
+        font-size: 1rem !important;
+        gap: 8px !important;
+        flex-shrink: 0; /* Logo jangan menyusut */
+    }
+    .logo img { height: 28px !important; width: auto; }
+
+    /* Tombol Auth (Login/Profil) yang Ramping */
+    #authContainer a, .btn-auth {
+        font-size: 0.75rem !important;
+        padding: 6px 12px !important;
+        border-radius: 20px !important;
+        border: 1px solid rgba(255, 215, 0, 0.3) !important;
+        color: #FFD700 !important;
+        background: rgba(255, 215, 0, 0.05);
+        white-space: nowrap;
+        display: flex; align-items: center; gap: 5px;
+    }
+
+    /* --- C. BOTTOM NAVIGATION (iOS STYLE) --- */
+    .bottom-nav {
+        position: fixed;
+        bottom: 20px; /* Default bottom */
+        bottom: calc(10px + env(safe-area-inset-bottom)); /* iPhone X+ adjustment */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 92%; max-width: 400px;
+        height: var(--nav-height);
+
+        /* Glassmorphism Extreme */
+        background: rgba(18, 18, 18, 0.85);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+
+        border-radius: 50px;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 9999;
+        padding: 0 5px;
+    }
+
+    .nav-item {
+        flex: 1; display: flex; flex-direction: column;
+        align-items: center; justify-content: center;
+        color: #666; text-decoration: none;
+        height: 100%; transition: 0.3s;
+    }
+
+    .nav-item span { font-size: 0.6rem; margin-top: 3px; font-weight: 500; }
+    .nav-item i { font-size: 1.2rem; transition: 0.3s; }
+
+    .nav-item.active { color: #FFD700; }
+    .nav-item.active i { transform: translateY(-2px); filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.4)); }
+
+    /* --- D. LANDING PAGE FIXES --- */
+    .hero-section {
+        flex-direction: column; text-align: center;
+        padding-top: 110px; /* Jarak Header */
+        gap: 30px; height: auto;
+    }
+    .hero-text, .hero-img-box { width: 100% !important; }
+    .hero-img-box { height: 400px; margin-top: 10px; }
+    .hero-title { font-size: 2.5rem !important; }
+
+    /* Grid Menjadi 2 Kolom */
+    .collection-grid, .product-grid, .masonry-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 12px !important;
+    }
+
+    /* Kartu Produk Mobile */
+    .card-img, .product-img { height: 200px !important; }
+    .card-title, .product-name { font-size: 0.9rem !important; }
+    .price, .card-price { font-size: 0.9rem !important; }
+
+    /* --- E. CHECKOUT & FORMS (CRITICAL FIX) --- */
+    .grid-layout { grid-template-columns: 1fr !important; gap: 30px; }
+
+    /* Form Input Optimization for Touch */
+    .form-group label { font-size: 0.85rem; color: #aaa; }
+    .input-dark, input, select, textarea {
+        height: 48px !important; /* Tinggi minimal untuk jari */
+        font-size: 16px !important; /* Mencegah zoom otomatis di iOS */
+        padding: 10px 15px !important;
+    }
+    textarea { height: auto !important; }
+
+    /* MASALAH TANGGAL: Paksa Vertikal */
+    .form-row {
+        display: flex !important;
+        flex-direction: column !important; /* Tumpuk ke bawah */
+        gap: 15px !important;
+        margin-bottom: 20px;
+    }
+
+    /* Pilihan Radio (Pengiriman/Bayar) */
+    .radio-grid, .payment-option-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .radio-box, .payment-card { padding: 12px; }
+
+    /* Sembunyikan Stepper Checkout yang lebar */
+    .stepper { display: none !important; }
+
+    /* Ringkasan Pesanan Tidak Sticky di Mobile */
+    .summary-card { position: relative !important; top: 0 !important; margin-top: 20px; }
+    .right-column { order: 2; } /* Pastikan Ringkasan di bawah Form */
+
+    /* --- F. DETAIL PAGE & PROFILE --- */
+    .detail-container { grid-template-columns: 1fr !important; gap: 20px; }
+    .gallery-box { position: relative !important; }
+    .main-img { height: 350px !important; }
+
+    .dashboard-container {
+        display: flex !important; flex-direction: column; margin-top: 100px !important;
+    }
+    /* Sidebar Profil jadi Menu Geser */
+    .dashboard-container .sidebar {
+        width: 100%; overflow-x: auto; white-space: nowrap;
+        padding: 10px 0; border: none; display: flex; gap: 10px;
+    }
+    .side-menu { display: flex; gap: 10px; }
+    .user-card { display: none; } /* Sembunyikan foto besar profil */
+
+    /* --- G. AUTH PAGES (Login/Register) --- */
+    .main-container {
+        flex-direction: column; padding-top: 80px;
+    }
+    .left-panel { display: none; } /* Sembunyikan teks hero login di HP */
+    .right-panel { padding: 20px; }
+    .form-wrapper { padding: 25px; width: 100%; }
+
+    .input-wrapper input {
+        padding-left: 45px !important;
+    }
+    .input-icon {
+        left: 15px !important;
+        font-size: 1rem !important;
+    }
+
+}
+
+/* ==========================================================================
+   3. TINY MOBILE (iPhone SE, Galaxy Mini - Max: 380px)
+   ========================================================================== */
+@media (max-width: 380px) {
+    .collection-grid, .product-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    h1 { font-size: 1.8rem !important; }
+    .hero-title { font-size: 2rem !important; }
+
+    .nav-item span { font-size: 0.55rem; }
+    .bottom-nav { width: 95%; padding: 0; }
+}

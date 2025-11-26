@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tentang Kami - Talenta Arts</title>
+    <link rel="stylesheet" href="landing.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="../Assets/css/responsive.css">
+
+    <style>
+      body {
+        background-color: #050505;
+        color: #fff;
+      }
+
+      /* HERO */
+      .about-hero {
+        padding: 150px 5% 80px;
+        text-align: center;
+        background: url("../Assets/PenariCilik.png") no-repeat center
+          center/cover;
+        position: relative;
+      }
+      .about-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, rgba(5, 5, 5, 0.8), #050505);
+      }
+      .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .hero-content h1 {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+      }
+      .hero-content span {
+        color: #ffd700;
+      }
+
+      /* STORY SECTION */
+      .story-section {
+        padding: 80px 5%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .story-text h2 {
+        font-size: 2rem;
+        color: #ffd700;
+        margin-bottom: 20px;
+      }
+      .story-text p {
+        color: #ccc;
+        line-height: 1.8;
+        margin-bottom: 15px;
+      }
+      .story-img {
+        width: 100%;
+        border-radius: 20px;
+        border: 1px solid #333;
+        box-shadow: 20px 20px 0px rgba(255, 215, 0, 0.1);
+      }
+
+      /* STATS */
+      .stats-row {
+        display: flex;
+        justify-content: center;
+        gap: 80px;
+        padding: 60px 5%;
+        background: #0a0a0a;
+        border-top: 1px solid #222;
+        border-bottom: 1px solid #222;
+      }
+      .stat-box {
+        text-align: center;
+      }
+      .stat-num {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #ffd700;
+      }
+      .stat-label {
+        color: #666;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+      }
+
+      /* TEAM */
+      .team-section {
+        padding: 80px 5%;
+        text-align: center;
+      }
+      .team-grid {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+        margin-top: 40px;
+      }
+      .team-card {
+        background: #111;
+        padding: 30px;
+        border-radius: 15px;
+        border: 1px solid #222;
+        width: 250px;
+        transition: 0.3s;
+      }
+      .team-card:hover {
+        transform: translateY(-10px);
+        border-color: #ffd700;
+      }
+      .team-img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ffd700;
+        margin-bottom: 15px;
+      }
+
+      @media (max-width: 768px) {
+        .story-section {
+          grid-template-columns: 1fr;
+        }
+        .stats-row {
+          flex-direction: column;
+          gap: 30px;
+        }
+      }
+    </style>
+
+  </head>
+  <body>
+  <header id="app-header"></header>
+
+    <section class="about-hero">
+      <div class="hero-content">
+        <h1>MELESTARIKAN BUDAYA<br /><span>LEWAT KARYA</span></h1>
+        <p>
+          Talenta Arts Project berdiri sejak 2020 dengan satu misi: Menjadikan
+          busana adat kebanggaan nusantara yang elegan dan mudah diakses.
+        </p>
+      </div>
+    </section>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">Tahun Berkarya</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">1.2k</div>
+        <div class="stat-label">Klien Bahagia</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">450+</div>
+        <div class="stat-label">Koleksi Kostum</div>
+      </div>
+    </div>
+
+    <section class="story-section">
+      <img src="../Assets/KostumMakassar.png" class="story-img" />
+      <div class="story-text">
+        <h2>Filosofi Kami</h2>
+        <p>
+          Kami percaya bahwa setiap helai benang pada kostum adat memiliki
+          cerita. Di Talenta Arts, kami tidak sekadar menyewakan baju, kami
+          merawat warisan.
+        </p>
+        <p>
+          Seluruh koleksi kami dikurasi dengan standar tinggi. Mulai dari Sutra
+          Sengkang asli hingga payet modern yang dijahit tangan, kami memastikan
+          Anda tampil sempurna di hari istimewa.
+        </p>
+        <div style="margin-top: 30px">
+          <i class="fa-solid fa-check" style="color: #ffd700"></i> Kualitas
+          Premium<br />
+          <i class="fa-solid fa-check" style="color: #ffd700"></i> Higienis &
+          Terawat<br />
+          <i class="fa-solid fa-check" style="color: #ffd700"></i> Konsultasi
+          Gratis
+        </div>
+      </div>
+    </section>
+
+    <section class="team-section">
+      <h2 style="color: #ffd700; margin-bottom: 10px">TIM KREATIF</h2>
+      <p style="color: #888">Orang-orang di balik layar Talenta Arts.</p>
+
+      <div class="team-grid">
+        <div class="team-card">
+          <img src="../Assets/Admin_nawwaf.jpg" class="team-img" />
+          <h4 style="margin-bottom: 5px">Nawwaf</h4>
+          <small style="color: #ffd700">Founder & CEO</small>
+        </div>
+        <div class="team-card">
+          <img src="../Assets/Maya Sari.png" class="team-img" />
+          <h4 style="margin-bottom: 5px">Maya Sari</h4>
+          <small style="color: #ffd700">Head of Wardrobe</small>
+        </div>
+        <div class="team-card">
+          <img src="../Assets/Rizki Pratama.png" class="team-img" />
+          <h4 style="margin-bottom: 5px">Rizki</h4>
+          <small style="color: #ffd700">Creative Director</small>
+        </div>
+      </div>
+    </section>
+
+    <footer id="app-footer"></footer>
+    <script src="../Assets/js/components.js"></script>
+
+    <script src="../Assets/js/main.js"></script>
+  </body>
+</html>

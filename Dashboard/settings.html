@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengaturan Akun - Talenta Arts</title>
+
+    <link rel="stylesheet" href="landing.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../Assets/css/responsive.css">
+
+    <style>
+        /* --- LAYOUT DASHBOARD --- */
+        body { background-color: #050505; color: #fff; }
+
+        .dashboard-container {
+            max-width: 1200px; margin: 120px auto 60px; padding: 0 5%;
+            display: grid; grid-template-columns: 280px 1fr; gap: 40px; min-height: 60vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar { background: #111; border: 1px solid #333; border-radius: 15px; padding: 30px; height: fit-content; }
+        .user-card { text-align: center; margin-bottom: 30px; border-bottom: 1px solid #222; padding-bottom: 20px; }
+        .user-avatar { width: 80px; height: 80px; border-radius: 50%; border: 2px solid #FFD700; object-fit: cover; margin-bottom: 15px; }
+        .side-menu { list-style: none; }
+        .side-link { display: flex; align-items: center; gap: 15px; padding: 12px 15px; color: #888; border-radius: 8px; cursor: pointer; transition: 0.3s; font-size: 0.95rem; }
+        .side-link:hover, .side-link.active { background: rgba(255, 215, 0, 0.1); color: #FFD700; }
+        .side-link i { width: 20px; text-align: center; }
+
+        /* CONTENT AREA */
+        .content-card { background: #111; border: 1px solid #333; border-radius: 15px; padding: 40px; display: none; animation: fadeIn 0.3s ease; }
+        .content-card.active { display: block; }
+
+        h2 { color: #FFD700; margin-bottom: 25px; font-size: 1.5rem; border-bottom: 1px solid #222; padding-bottom: 15px; }
+
+        /* FORMS */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; color: #888; margin-bottom: 8px; font-size: 0.9rem; }
+        .input-dark { width: 100%; background: #050505; border: 1px solid #333; padding: 12px 15px; border-radius: 8px; color: #fff; outline: none; transition: 0.3s; }
+        .input-dark:focus { border-color: #FFD700; }
+
+        .btn-save { background: linear-gradient(135deg, #FFD700, #FDB931); color: #000; border: none; padding: 12px 30px; border-radius: 30px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+
+        /* ORDER HISTORY TABLE */
+        .history-table { width: 100%; border-collapse: collapse; }
+        .history-table th { text-align: left; color: #888; padding: 15px; border-bottom: 1px solid #333; font-size: 0.85rem; }
+        .history-table td { padding: 15px; border-bottom: 1px solid #222; font-size: 0.9rem; }
+        .history-table th:last-child, .history-table td:last-child { text-align: center; }
+
+        .status-badge { padding: 5px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; }
+        .status-success { background: rgba(46, 204, 113, 0.2); color: #2ecc71; }
+        .status-pending { background: rgba(243, 156, 18, 0.2); color: #f1c40f; }
+        .status-cancel { background: rgba(255, 68, 68, 0.2); color: #ff4444; }
+
+        @keyframes fadeIn { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
+        @media(max-width: 768px) { .dashboard-container { grid-template-columns: 1fr; } .sidebar { display: flex; overflow-x: auto; padding: 15px; gap: 10px; } .user-card { display: none; } .side-link { white-space: nowrap; } }
+    </style>
+</head>
+<body>
+
+    <header id="app-header"></header>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="user-card">
+                <img src="../Assets/Maya Sari.png" class="user-avatar" id="sideAvatar">
+                <h4 id="sideName">User Name</h4>
+                <small style="color:#666">Member sejak 2025</small>
+            </div>
+            <ul class="side-menu">
+                <li class="side-link active" onclick="switchTab('profile', this)"><i class="fa-regular fa-user"></i> Profil Saya</li>
+                <li class="side-link" onclick="switchTab('orders', this)"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Sewa</li>
+                <li class="side-link" onclick="switchTab('security', this)"><i class="fa-solid fa-shield-halved"></i> Keamanan</li>
+                <li class="side-link" style="color:#ff4444; margin-top:0px;" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar</li>
+            </ul>
+        </aside>
+
+        <main class="content">
+            <div id="tab-profile" class="content-card active">
+                <h2>Edit Profil</h2>
+                <form id="profileForm" onsubmit="saveProfile(event)">
+                    <div class="form-group"><label>Nama Lengkap</label><input type="text" id="editName" class="input-dark"></div>
+                    <div class="form-group"><label>Nomor WhatsApp</label><input type="text" id="editPhone" class="input-dark"></div>
+                    <div class="form-group"><label>Email Address</label><input type="email" id="editEmail" class="input-dark" disabled style="color:#555; cursor:not-allowed;"><small style="color:#444">*Email tidak dapat diubah</small></div>
+                    <div class="form-group"><label>Alamat Utama</label><textarea id="editAddress" class="input-dark" rows="3"></textarea></div>
+                    <button type="submit" class="btn-save">Simpan Perubahan</button>
+                </form>
+            </div>
+
+            <div id="tab-orders" class="content-card">
+                <h2>Riwayat Penyewaan</h2>
+                <div style="overflow-x:auto;">
+                    <table class="history-table">
+                        <thead>
+                            <tr><th>ID Order</th><th>Kostum & Info</th><th>Tanggal</th><th>Total</th><th>Status</th><th>Aksi</th></tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tab-security" class="content-card">
+                <h2>Ganti Password</h2>
+                <form onsubmit="changePassword(event)">
+                    <div class="form-group">
+                        <label>Password Saat Ini</label>
+                        <input type="password" id="currentPass" class="input-dark" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password Baru</label>
+                        <input type="password" id="newPass" class="input-dark" placeholder="Min. 8 Karakter" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Konfirmasi Password Baru</label>
+                        <input type="password" id="confirmNewPass" class="input-dark" required>
+                    </div>
+
+                    <button type="submit" class="btn-save">Update Password</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="footer-bottom" style="border-top:1px solid #222; padding:20px; text-align:center; color:#666; font-size:0.8rem;">&copy; 2025 Talenta Arts Studio.</div>
+    </footer>
+
+    <div id="cancelOrderModal" class="logout-overlay">
+        <div class="logout-box">
+            <div class="logout-icon" style="background:rgba(255, 68, 68, 0.1); color:#ff4444; border-color:rgba(255, 68, 68, 0.3);">
+                <i class="fa-solid fa-ban"></i>
+            </div>
+            <h3 class="logout-title">Batalkan Pesanan?</h3>
+            <p class="logout-desc">Dana akan dikembalikan ke saldo akun Anda (Simulasi).</p>
+            <div class="logout-actions">
+                <button class="btn-cancel" onclick="closeCancelModal()">Tidak</button>
+                <button class="btn-confirm" onclick="confirmCancel()">Ya, Batalkan</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="../Assets/js/components.js"></script>
+    <script src="../Assets/js/main.js"></script>
+
+    <script>
+        let targetCancelIndex = -1;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            if(localStorage.getItem('isLoggedIn') !== 'true') window.location.href = '../LoginRegister/login.html';
+            loadProfileData();
+            renderOrderHistory();
+        });
+
+        function renderOrderHistory() {
+            const historyData = JSON.parse(localStorage.getItem('orderHistory')) || [];
+            const tbody = document.querySelector('.history-table tbody');
+
+            if (historyData.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:30px; color:#666;">Belum ada riwayat penyewaan.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = '';
+            historyData.forEach((order, index) => {
+                let badgeClass = '';
+                let statusLabel = order.status;
+                let actionBtn = '';
+
+                // Logika Status & Warna Badge
+                if (order.status === 'Dibatalkan') {
+                    badgeClass = 'status-cancel';
+                } else if (order.status === 'Selesai') {
+                    badgeClass = 'status-success';
+                    actionBtn = `<span style="color:#4CAF50; font-size:0.8rem;"><i class="fa-solid fa-check-double"></i> Tuntas</span>`;
+                } else {
+                    // Status 'Diproses' (Default)
+                    badgeClass = 'status-pending';
+
+                    // Tombol Aksi Ganda (Batalkan / Kembalikan)
+                    actionBtn = `
+                        <div style="display:flex; gap:5px; justify-content:center;">
+                            <button onclick="returnOrder(${index})" style="background:rgba(46, 204, 113, 0.1); border:1px solid #2ecc71; color:#2ecc71; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:0.7rem; transition:0.3s;" title="Konfirmasi Pengembalian Barang">
+                                Kembalikan
+                            </button>
+                            <button onclick="requestCancel(${index})" style="background:rgba(255, 68, 68, 0.1); border:1px solid #ff4444; color:#ff4444; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:0.7rem; transition:0.3s;" title="Batalkan Pesanan">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    `;
+                }
+
+                const row = `
+                    <tr>
+                        <td style="font-family:monospace; color:#888;">${order.id}</td>
+                        <td>
+                            <div style="font-weight:600; color:#fff;">${order.item}</div>
+                            <div style="font-size:0.75rem; color:#888;">Via ${order.method}</div>
+                        </td>
+                        <td style="color:#ccc;">${order.date}</td>
+                        <td style="color:#FFD700; font-weight:600;">${order.total}</td>
+                        <td><span class="status-badge ${badgeClass}">${statusLabel}</span></td>
+                        <td style="text-align:center;">${actionBtn}</td>
+                    </tr>`;
+                tbody.innerHTML += row;
+            });
+        }
+
+        function returnOrder(index) {
+            if(confirm("Apakah Anda yakin sudah mengembalikan kostum ini? Status akan diubah menjadi Selesai.")) {
+                let history = JSON.parse(localStorage.getItem('orderHistory'));
+
+                // Ubah status jadi Selesai
+                history[index].status = 'Selesai';
+
+                // Simpan & Refresh
+                localStorage.setItem('orderHistory', JSON.stringify(history));
+                renderOrderHistory();
+
+                if(typeof showToast === 'function') showToast("Terima kasih! Pesanan selesai.", "success");
+            }
+        }
+
+
+        // --- LOGIC MODAL BATAL ---
+        function requestCancel(index) {
+            targetCancelIndex = index;
+            document.getElementById('cancelOrderModal').classList.add('active');
+        }
+
+        function closeCancelModal() {
+            document.getElementById('cancelOrderModal').classList.remove('active');
+            targetCancelIndex = -1;
+        }
+
+        function confirmCancel() {
+            if (targetCancelIndex > -1) {
+                let history = JSON.parse(localStorage.getItem('orderHistory'));
+                history[targetCancelIndex].status = 'Dibatalkan';
+                localStorage.setItem('orderHistory', JSON.stringify(history));
+
+                renderOrderHistory();
+                closeCancelModal();
+                if(typeof showToast === 'function') showToast("Pesanan berhasil dibatalkan", "error");
+            }
+        }
+
+        // Tutup modal jika klik luar
+        window.onclick = function(event) {
+            const modal = document.getElementById('cancelOrderModal');
+            if (event.target === modal) closeCancelModal();
+        }
+
+        // --- LOGIC PROFIL & TAB ---
+        function loadProfileData() {
+            const name = localStorage.getItem('userName') || 'User';
+            document.getElementById('sideName').innerText = name;
+            document.getElementById('editName').value = name;
+            document.getElementById('editPhone').value = localStorage.getItem('userPhone') || '';
+            document.getElementById('editEmail').value = 'user@talenta.id';
+            document.getElementById('editAddress').value = localStorage.getItem('userAddress') || '';
+        }
+
+        function switchTab(tab, el) {
+            document.querySelectorAll('.content-card').forEach(c => c.classList.remove('active'));
+            document.getElementById('tab-'+tab).classList.add('active');
+            document.querySelectorAll('.side-link').forEach(l => l.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        function saveProfile(e) {
+            e.preventDefault();
+            localStorage.setItem('userName', document.getElementById('editName').value);
+            localStorage.setItem('userPhone', document.getElementById('editPhone').value);
+            localStorage.setItem('userAddress', document.getElementById('editAddress').value);
+            loadProfileData();
+            if(typeof showToast === 'function') showToast("Profil Disimpan");
+        }
+
+        function changePassword(e) {
+            e.preventDefault();
+
+            // Ambil Value
+            const currentPass = document.getElementById('currentPass').value;
+            const newPass = document.getElementById('newPass').value;
+            const confirmNewPass = document.getElementById('confirmNewPass').value;
+
+            // 1. Validasi Panjang Password Baru
+            if (newPass.length < 8) {
+                if(typeof showToast === 'function') {
+                    showToast("Password baru minimal 8 karakter!", "error");
+                } else {
+                    alert("Password baru minimal 8 karakter!");
+                }
+                document.getElementById('newPass').focus();
+                return;
+            }
+
+            // 2. Validasi Kecocokan Password
+            if (newPass !== confirmNewPass) {
+                if(typeof showToast === 'function') {
+                    showToast("Konfirmasi password tidak cocok!", "error");
+                } else {
+                    alert("Konfirmasi password tidak cocok!");
+                }
+                return;
+            }
+
+            // 3. (Opsional) Cek Password Lama tidak boleh sama dengan Password Baru
+            if (currentPass === newPass) {
+                if(typeof showToast === 'function') {
+                    showToast("Password baru harus beda dari yang lama!", "error");
+                }
+                return;
+            }
+
+            // --- SUKSES ---
+            // Karena belum ada database, kita anggap sukses
+            if(typeof showToast === 'function') showToast("Password Berhasil Diubah!");
+
+            // Reset Form
+            e.target.reset();
+        }
+    </script>
+</body>
+</html>
